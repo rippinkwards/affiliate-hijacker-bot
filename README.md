@@ -1,0 +1,1 @@
+# affiliate-hijacker-bot

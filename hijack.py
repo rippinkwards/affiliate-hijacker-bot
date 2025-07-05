@@ -5,12 +5,21 @@ from urllib.parse import urlparse, parse_qsl, urlencode, urlunparse
 from bs4 import BeautifulSoup
 from config import AFFILIATE_TAG
 
+# Use a realistic User-Agent to avoid 403
+HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/115.0.0.0 Safari/537.36"
+    )
+}
+
 TARGET_URLS = [
     'https://petapixel.com/2021/06/01/best-sennheiser-microphones-for-video/',
 ]
 
 def fetch_html(url, headers=None, proxies=None):
-    resp = requests.get(url, headers=headers or {}, proxies=proxies or {})
+    resp = requests.get(url, headers=headers or HEADERS, proxies=proxies or {})
     resp.raise_for_status()
     return resp.text
 
@@ -19,7 +28,6 @@ def update_affiliate_tag(url):
     Replace or append the 'tag' query parameter with our AFFILIATE_TAG.
     """
     parsed = urlparse(url)
-    # Preserve all existing query params, replacing 'tag'
     query_params = dict(parse_qsl(parsed.query))
     query_params['tag'] = AFFILIATE_TAG
     new_query = urlencode(query_params)

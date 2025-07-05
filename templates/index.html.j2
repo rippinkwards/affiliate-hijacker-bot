@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Amazon Picks</title>
+  <style>
+    body { font-family: sans-serif; max-width: 600px; margin: 2rem auto; }
+    .product { border-bottom: 1px solid #ddd; padding: 1rem 0; }
+    a { text-decoration: none; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Top Amazon Picks</h1>
+  {% for product in products %}
+  <div class="product">
+    <h2>{{ product.title }}</h2>
+    <p>{{ product.description }}</p>
+    <a href="https://www.amazon.com/dp/{{ product.asin }}/?tag={{ affiliate_tag }}" target="_blank" rel="noopener">
+      👉 Buy on Amazon
+    </a>
+  </div>
+  {% endfor %}
+</body>
+</html>
